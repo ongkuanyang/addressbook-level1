@@ -1,4 +1,11 @@
 ##########################################################
+# Tests help command
+##########################################################
+
+  # should display help info
+  help
+
+##########################################################
 # invalid command
 ##########################################################
 
@@ -51,7 +58,7 @@
   find bet
   # does not match if none have keyword
   find 23912039120
-  # matching should be case-sensitive
+  # matching should be case-insensitive
   find betsy
 
   # find unique keyword
