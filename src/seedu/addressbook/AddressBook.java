@@ -989,12 +989,12 @@ public class AddressBook {
 
         // phone is last arg, target is from prefix to end of string
         if (indexOfPhonePrefix > indexOfEmailPrefix) {
-            return removePrefixSign(encoded.substring(indexOfPhonePrefix, encoded.length()).trim(),
+            return removePrefix(encoded.substring(indexOfPhonePrefix, encoded.length()).trim(),
                     PERSON_DATA_PREFIX_PHONE);
 
         // phone is middle arg, target is from own prefix to next prefix
         } else {
-            return removePrefixSign(
+            return removePrefix(
                     encoded.substring(indexOfPhonePrefix, indexOfEmailPrefix).trim(),
                     PERSON_DATA_PREFIX_PHONE);
         }
@@ -1012,12 +1012,12 @@ public class AddressBook {
 
         // email is last arg, target is from prefix to end of string
         if (indexOfEmailPrefix > indexOfPhonePrefix) {
-            return removePrefixSign(encoded.substring(indexOfEmailPrefix, encoded.length()).trim(),
+            return removePrefix(encoded.substring(indexOfEmailPrefix, encoded.length()).trim(),
                     PERSON_DATA_PREFIX_EMAIL);
 
         // email is middle arg, target is from own prefix to next prefix
         } else {
-            return removePrefixSign(
+            return removePrefix(
                     encoded.substring(indexOfEmailPrefix, indexOfPhonePrefix).trim(),
                     PERSON_DATA_PREFIX_EMAIL);
         }
@@ -1150,8 +1150,22 @@ public class AddressBook {
      * @param sign  Parameter sign to be removed
      * @return  string without the sign
      */
-    private static String removePrefixSign(String s, String sign) {
-        return s.replace(sign, "");
+
+    /**
+     * Returns fullString without prefix or fullString if prefix is not the prefix of fullString
+     *
+     * @param fullString Input string
+     * @param prefix  Prefix string to be removed
+     * @return  fullString with prefix removed
+     */
+    private static String removePrefix(String fullString, String prefix) {
+        if (fullString.length() < prefix.length()) return fullString;
+
+        String fullStringPrefix = fullString.substring(0, prefix.length());
+
+        if (!fullStringPrefix.equals(prefix)) return fullString;
+
+        return fullString.substring(prefix.length(), fullString.length());
     }
 
     /**
